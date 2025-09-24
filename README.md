@@ -7,7 +7,7 @@
 
 ---
 
-## 📌 Approach and Implementation  
+## Approach and Implementation  
 
 ### Mapper Design  
 - **Input Key-Value Pair:**  
