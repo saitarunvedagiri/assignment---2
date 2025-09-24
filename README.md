@@ -112,9 +112,10 @@ exit
 docker cp resourcemanager:/opt/hadoop-3.2.1/share/hadoop/mapreduce/output1/ "C:\Tarun\fall 2025\cloud computing\assignment - 2\output\"
 ```
 ## Challenges and Solutions
-1.Generating document pairs without duplicates
-⋅⋅⋅⋅* Challenge: At first, I was getting duplicate pairs such as (DocA, DocB) and (DocB, DocA), which inflated the number of comparisons.
-⋅⋅⋅⋅* Solution: I fixed this by always sorting the document IDs before emitting them as a key, so each pair was generated only once.
+###### 1.Generating document pairs without duplicates
+Challenge: At first, I was getting duplicate pairs such as (DocA, DocB) and (DocB, DocA), which inflated the number of comparisons.
+
+Solution: I fixed this by always sorting the document IDs before emitting them as a key, so each pair was generated only once.
 
 
 
