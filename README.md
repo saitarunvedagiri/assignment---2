@@ -137,4 +137,21 @@ Solution: After reviewing the instructions, I realized this slowdown was expecte
 ---
 
 
+## Input
+
+#### File: small_dataset.txt
+```bash
+DocA This document talks about cloud computing and big data
+DocB Big data analysis is part of cloud computing assignment
+DocC Hadoop and MapReduce are used for large scale data processing
+```
+
+#### Obtained Output
+```bash
+DocA, DocB Similarity: 0.40
+DocA, DocC Similarity: 0.25
+DocB, DocC Similarity: 0.30
+```
+
+
 
