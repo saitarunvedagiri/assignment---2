@@ -27,3 +27,29 @@ A second MapReduce stage aggregates counts per document pair:
 * **Key–Value:** `<docPair, [counts]>`  
 * **Process:** Count common words (`|A ∩ B|`). Retrieve total unique word counts for each document
 (using a side file or pre-computed counts) to calculate:
+
+
+* **Output:** `<docA, docB> Similarity: <score>` (rounded to two decimals).
+
+### Overall Data Flow
+1. **Stage 1 – Word→Docs:** Mapper emits each word with its document ID.  
+2. **Shuffle/Sort:** Groups by word.  
+3. **Reducer:** Generates all document pairs that share that word.  
+4. **Stage 2 – Pair Counting:** Aggregates counts of shared words and computes the Jaccard score.  
+5. Final output lists every document pair with its similarity.
+
+---
+
+## Setup and Execution
+
+The project directory is:  
+`C:\Tarun\fall 2025\cloud computing\assignment - 2`
+
+Below are the commands I used inside **GitHub Codespaces / Docker Hadoop**.
+
+> **Tip:** Adjust file names or container names if they differ in your environment.
+
+### 1️⃣ Start the Hadoop Cluster
+```bash
+docker compose up -d
+```
