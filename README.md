@@ -138,7 +138,7 @@ Solution: After reviewing the instructions, I realized this slowdown was expecte
 ---
 
 
-## Input
+## Input / Output
 
 #### File: input.txt
 ```bash
