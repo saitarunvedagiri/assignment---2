@@ -1,55 +1,83 @@
-# Assignment 2: Document Similarity using MapReduce
+# Assignment 2: Document Similarity using MapReduce  
 
-**Name:** *Sai Tarun Vedagiti*  
-**Student ID:** *801421332*
+**Course:** Cloud Computing for Data Analysis (ITCS 6190/8190, Fall 2025)  
 
----
-
-## Approach and Implementation
-
-### Mapper Design
-The Mapper reads each line of the input file, where the first token is the **Document ID**
-and the rest is the document text.  
-* **Input Key–Value:** `<offset, line>`  
-* **Process:**  
-  1. Split each line into the document ID and its words.  
-  2. Convert words to lowercase and strip punctuation.  
-  3. Emit `<word, documentID>` so we know which documents contain each unique word.
-
-### Reducer Design
-The Reducer receives a **word** and the list of **documents** in which it appears.  
-* **Input Key–Value:** `<word, [docID1, docID2, …]>`  
-* **Process:**  
-  1. Generate all **unique document pairs** for that word.  
-  2. For each pair, emit `<docPair, 1>` to indicate they share this word.
-
-A second MapReduce stage aggregates counts per document pair:
-* **Key–Value:** `<docPair, [counts]>`  
-* **Process:** Count common words (`|A ∩ B|`). Retrieve total unique word counts for each document
-(using a side file or pre-computed counts) to calculate:
-
-
-* **Output:** `<docA, docB> Similarity: <score>` (rounded to two decimals).
-
-### Overall Data Flow
-1. **Stage 1 – Word→Docs:** Mapper emits each word with its document ID.  
-2. **Shuffle/Sort:** Groups by word.  
-3. **Reducer:** Generates all document pairs that share that word.  
-4. **Stage 2 – Pair Counting:** Aggregates counts of shared words and computes the Jaccard score.  
-5. Final output lists every document pair with its similarity.
+**Name:*Sai Tarun Vedagiri *  
+**Student ID:*801421332 *  
 
 ---
 
-## Setup and Execution
+## 📌 Approach and Implementation  
 
-The project directory is:  
-`C:\Tarun\fall 2025\cloud computing\assignment - 2`
+### Mapper Design  
+- **Input Key-Value Pair:**  
+  - Key → Byte offset of the line in the input file  
+  - Value → A full line of text (one document)  
 
-Below are the commands I used inside **GitHub Codespaces / Docker Hadoop**.
+- **Processing:**  
+  - The Mapper reads each document line.  
+  - Extracts the **document ID** (first token) and the **document text** (remaining tokens).  
+  - Cleans text by converting to lowercase and removing punctuation.  
+  - Builds a **set of unique words** for each document.  
+  - Emits `(DocumentID, Word)` pairs for building sets in the next stage.  
 
-> **Tip:** Adjust file names or container names if they differ in your environment.
+- **Output Key-Value Pair:**  
+  - Key → Document ID  
+  - Value → Word  
 
-### 1️⃣ Start the Hadoop Cluster
+---
+
+### Reducer Design  
+- **Input Key-Value Pair:**  
+  - Key → Document ID  
+  - Value → List of words from the document  
+
+- **Processing:**  
+  - Reconstructs the **set of unique words** for each document.  
+  - Generates all possible **pairs of documents**.  
+  - For each pair `(DocX, DocY)`, computes:  
+    - Intersection: `|A ∩ B|` (common words)  
+    - Union: `|A ∪ B|` (all unique words)  
+    - Jaccard Similarity = `|A ∩ B| / |A ∪ B|`  
+
+- **Final Output:*DocA, DocB Similarity: 0.40 *  
+
+
+---
+
+### Overall Data Flow  
+1. **Input Stage** → Documents loaded from HDFS.  
+2. **Mapper** → Produces word sets per document.  
+3. **Shuffle/Sort** → Groups words by document ID.  
+4. **Reducer** → Reconstructs sets, generates document pairs, computes similarity.  
+5. **Output** → Jaccard similarity scores written to HDFS.  
+
+---
+
+## Setup and Execution  
+
+**Navigate to Project Folder or Directory:**  
+```bash
+C:\Tarun\fall 2025\cloud computing\assignment - 2
+```
+
+### 1. Start the Hadoop Cluster  
 ```bash
 docker compose up -d
 ```
+### 2. Build the Code
+```bash
+cd "C:\Tarun\fall 2025\cloud computing\assignment - 2"
+mvn clean package
+```
+### 3. Copy JAR to Docker Container
+
+```bash
+docker cp target/DocumentSimilarity-1.0-SNAPSHOT.jar resourcemanager:/opt/hadoop-3.2.1/share/hadoop/mapreduce/
+```
+
+
+
+
+
+
