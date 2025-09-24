@@ -2,8 +2,8 @@
 
 **Course:** Cloud Computing for Data Analysis (ITCS 6190/8190, Fall 2025)  
 
-**Name:*Sai Tarun Vedagiri *  
-**Student ID:*801421332 *  
+**Name:** *Sai Tarun Vedagiri*  
+**Student ID:** *801421332*  
 
 ---
 
