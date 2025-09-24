@@ -61,20 +61,61 @@
 C:\Tarun\fall 2025\cloud computing\assignment - 2
 ```
 
-### 1. Start the Hadoop Cluster  
+#### 1. Start the Hadoop Cluster  
 ```bash
 docker compose up -d
 ```
-### 2. Build the Code
+#### 2. Build the Code
 ```bash
 cd "C:\Tarun\fall 2025\cloud computing\assignment - 2"
 mvn clean package
 ```
-### 3. Copy JAR to Docker Container
+#### 3. Copy JAR to Docker Container
 
 ```bash
 docker cp target/DocumentSimilarity-1.0-SNAPSHOT.jar resourcemanager:/opt/hadoop-3.2.1/share/hadoop/mapreduce/
 ```
+#### 4. Copy Dataset to Docker Container
+```bash
+docker cp datasets/small_dataset.txt resourcemanager:/opt/hadoop-3.2.1/share/hadoop/mapreduce/
+```
+
+#### 5. Connect to ResourceManager Container
+
+```bash
+docker exec -it resourcemanager /bin/bash
+cd /opt/hadoop-3.2.1/share/hadoop/mapreduce/
+```
+#### 6. Set Up HDFS Input Directory
+
+```bash
+hadoop fs -mkdir -p /input/data
+hadoop fs -put ./small_dataset.txt /input/data
+```
+#### 7. Run the MapReduce Job
+
+```bash
+hadoop jar DocumentSimilarity-1.0-SNAPSHOT.jar com.example.controller.Controller /input/data/small_dataset.txt /output1
+```
+#### 8. View the Output
+```bash
+hadoop fs -cat /output1/*
+```
+#### 9. Copy Output to Local Machine
+
+```bash
+hdfs dfs -get /output1 /opt/hadoop-3.2.1/share/hadoop/mapreduce/
+exit
+```
+#### From host:
+```bash
+docker cp resourcemanager:/opt/hadoop-3.2.1/share/hadoop/mapreduce/output1/ "C:\Tarun\fall 2025\cloud computing\assignment - 2\output\"
+```
+## Challenges and Solutions
+1.Generating document pairs without duplicates
+⋅⋅⋅⋅ Challenge: At first, I was getting duplicate pairs such as (DocA, DocB) and (DocB, DocA), which inflated the number of comparisons.
+⋅⋅⋅⋅ Solution: I fixed this by always sorting the document IDs before emitting them as a key, so each pair was generated only once.
+
 
 
 
