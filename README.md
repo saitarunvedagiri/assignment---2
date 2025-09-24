@@ -139,7 +139,7 @@ Solution: After reviewing the instructions, I realized this slowdown was expecte
 
 ## Input
 
-#### File: small_dataset.txt
+#### File: input.txt
 ```bash
 DocA This document talks about cloud computing and big data
 DocB Big data analysis is part of cloud computing assignment
