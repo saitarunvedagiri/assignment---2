@@ -1,0 +1,3 @@
+DocA Hadoop MapReduce is useful for big data analysis Hadoop MapReduce
+DocB Big data processing with Hadoop MapReduce framework is efficient
+DocC MapReduce simplifies distributed computation for large datasets

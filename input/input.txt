@@ -1,0 +1,3 @@
+DocA This document talks about cloud computing and big data
+DocB Big data analysis is part of cloud computing assignment
+DocC Hadoop and MapReduce are used for large scale data processing

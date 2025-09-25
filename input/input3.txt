@@ -1,0 +1,3 @@
+DocA Sample dataset for testing Jaccard similarity computation with Hadoop MapReduce
+DocB Another example dataset to test document similarity using Hadoop MapReduce
+DocC Yet another text dataset for running large-scale MapReduce jobs
