@@ -1,0 +1,3 @@
+DocA, DocB Similarity: 0.40
+DocA, DocC Similarity: 0.25
+DocB, DocC Similarity: 0.30
